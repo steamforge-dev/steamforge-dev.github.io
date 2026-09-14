@@ -16,6 +16,7 @@
       --accent-violet: #6366f1;
       --accent-cyan: #06b6d4;
       --accent-green: #10b981;
+      --accent-amber: #f59e0b;
       --text: #e2e8f0;
       --text-dim: #94a3b8;
     }
@@ -32,13 +33,12 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
       line-height: 1.6;
+      padding-bottom: 70px;
     }
 
-    /* Фоновые ауры */
-    .glow-bg-1, .glow-bg-2 {
+    /* Фоновые неоновые ауры */
+    .glow-bg-1, .glow-bg-2, .glow-bg-3 {
       position: absolute;
-      width: 550px;
-      height: 550px;
       border-radius: 50%;
       filter: blur(160px);
       z-index: -1;
@@ -46,14 +46,26 @@
       opacity: 0.18;
     }
     .glow-bg-1 {
+      width: 550px;
+      height: 550px;
       top: -150px;
       left: -100px;
       background: var(--accent-violet);
     }
     .glow-bg-2 {
-      top: 400px;
+      width: 500px;
+      height: 500px;
+      top: 350px;
       right: -100px;
       background: var(--accent-cyan);
+    }
+    .glow-bg-3 {
+      width: 450px;
+      height: 450px;
+      top: 1100px;
+      left: 10%;
+      background: #8b5cf6;
+      opacity: 0.12;
     }
 
     /* Header */
@@ -94,15 +106,15 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .nav-btn {
       color: var(--text);
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      padding: 10px 18px;
+      padding: 9px 18px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
@@ -110,9 +122,10 @@
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
     }
 
     /* Hero */
@@ -127,14 +140,22 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
       color: #a5b4fc;
       font-size: 13px;
       font-weight: 600;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 30px;
       margin-bottom: 24px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #34d399;
     }
 
     .hero h1 {
@@ -162,87 +183,95 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
-    /* Динамическая кнопка */
-    .btn-primary {
+    /* Главная кнопка Windows с анимацией "Скоро выйдет!" */
+    .btn-windows-main {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid rgba(56, 189, 248, 0.4);
       color: #fff;
       font-weight: 700;
-      font-size: 15px;
-      padding: 14px 28px;
-      border-radius: 10px;
+      font-size: 16px;
+      padding: 16px 36px;
+      border-radius: 12px;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.35);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       overflow: hidden;
       min-width: 300px;
-      min-height: 52px;
+      min-height: 56px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.15);
     }
 
-    .btn-primary .btn-text-default,
-    .btn-primary .btn-text-hover {
+    .btn-windows-main .btn-text-default,
+    .btn-windows-main .btn-text-hover {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-primary .btn-text-hover {
+    .btn-windows-main .btn-text-hover {
       position: absolute;
       opacity: 0;
-      transform: translateY(18px);
-      color: #fef08a;
+      transform: translateY(22px);
+      color: var(--accent-amber);
+      font-weight: 800;
+      text-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.55);
-      transform: translateY(-2px);
+    .btn-windows-main:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      background: linear-gradient(135deg, #261f14, #120e0a);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 38px rgba(245, 158, 11, 0.25);
     }
 
-    .btn-primary:hover .btn-text-default {
+    .btn-windows-main:hover .btn-text-default {
       opacity: 0;
-      transform: translateY(-18px);
+      transform: translateY(-22px);
     }
 
-    .btn-primary:hover .btn-text-hover {
+    .btn-windows-main:hover .btn-text-hover {
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Кнопка репозитория */
     .btn-secondary {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      background: rgba(19, 23, 34, 0.8);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      color: #fff;
+      color: #cbd5e1;
       font-weight: 600;
       font-size: 15px;
-      padding: 14px 26px;
-      border-radius: 10px;
+      padding: 16px 28px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: all 0.2s ease;
-      min-height: 52px;
+      transition: all 0.25s ease;
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      transform: translateY(-3px);
     }
 
     /* Бегущая лента карточек */
     .marquee-container {
       width: 100%;
       position: relative;
-      margin: 40px auto 100px;
+      margin: 40px auto 70px;
       overflow: hidden;
       padding: 20px 0;
       mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
@@ -341,6 +370,64 @@
       font-size: 10px;
     }
 
+    /* Terminal Preview (Интерактивная консоль инжекта) */
+    .terminal-section {
+      max-width: 860px;
+      margin: 0 auto 90px;
+      padding: 0 20px;
+    }
+
+    .terminal-box {
+      background: #0d111a;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.1);
+    }
+
+    .terminal-header {
+      background: #151b27;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .terminal-body {
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .term-green { color: #34d399; font-weight: 600; }
+    .term-cyan { color: #38bdf8; }
+    .term-gold { color: #fbbf24; }
+    .term-dim { color: #64748b; }
+
     /* Карточки фич */
     .features {
       max-width: 1200px;
@@ -390,6 +477,53 @@
       color: var(--text-dim);
     }
 
+    /* Cyber Status HUD (Нижняя статус-панель) */
+    .cyber-hud {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      z-index: 99;
+    }
+
+    .hud-items {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hud-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+    }
+
+    .hud-pulse {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
@@ -409,41 +543,37 @@
 
   <div class="glow-bg-1"></div>
   <div class="glow-bg-2"></div>
+  <div class="glow-bg-3"></div>
 
-  <!-- Header со стилизованным неоновым логотипом SteamForge -->
+  <!-- Header -->
   <header>
-    <a href="#" class="brand">
+    <a href="https://github.com/moskvol/steamforge" target="_blank" class="brand">
       <svg class="brand-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- Фон логотипа -->
           <linearGradient id="sf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#111625" />
             <stop offset="50%" stop-color="#0b0f19" />
             <stop offset="100%" stop-color="#05070c" />
           </linearGradient>
 
-          <!-- Неоновая рамка -->
           <linearGradient id="sf-border" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#38bdf8" />
             <stop offset="50%" stop-color="#6366f1" />
             <stop offset="100%" stop-color="#06b6d4" />
           </linearGradient>
 
-          <!-- Неоновый градиент рычагов Steam -->
           <linearGradient id="sf-arm" x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#0284c7" />
             <stop offset="50%" stop-color="#38bdf8" />
             <stop offset="100%" stop-color="#818cf8" />
           </linearGradient>
 
-          <!-- Огненное ядро кузницы (Forge Core) -->
           <linearGradient id="sf-fire-core" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#fbbf24" />
             <stop offset="60%" stop-color="#f43f5e" />
             <stop offset="100%" stop-color="#be185d" />
           </linearGradient>
 
-          <!-- Мягкое свечение -->
           <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="12" result="blur" />
             <feMerge>
@@ -453,29 +583,17 @@
           </filter>
         </defs>
 
-        <!-- Внешний скругленный блок со стеклянным градиентом -->
         <rect x="20" y="20" width="472" height="472" rx="116" fill="url(#sf-bg)" stroke="url(#sf-border)" stroke-width="10" />
-
-        <!-- Фоновая кибер-сетка / направляющие -->
         <circle cx="256" cy="256" r="170" stroke="rgba(255, 255, 255, 0.04)" stroke-width="2" fill="none" />
         <circle cx="256" cy="256" r="120" stroke="rgba(56, 189, 248, 0.08)" stroke-width="2" stroke-dasharray="8 6" fill="none" />
 
-        <!-- Основная геометрия Steam с неоновой обработкой -->
         <g filter="url(#neon-glow)">
-          <!-- Соединительный шатун от нижнего шарнира к среднему -->
           <path d="M 184 354 L 284 278" stroke="url(#sf-arm)" stroke-width="26" stroke-linecap="round" />
-          <!-- Шатун от среднего шарнира к главному колесу -->
           <path d="M 284 278 L 332 184" stroke="url(#sf-arm)" stroke-width="24" stroke-linecap="round" />
-
-          <!-- Большое ведущее кольцо Steam -->
           <circle cx="338" cy="180" r="76" fill="none" stroke="url(#sf-arm)" stroke-width="22" />
           <circle cx="338" cy="180" r="32" fill="#0b0f19" stroke="#6366f1" stroke-width="12" />
-
-          <!-- Центральный промежуточный шарнир -->
           <circle cx="284" cy="278" r="42" fill="#0b0f19" stroke="url(#sf-arm)" stroke-width="16" />
           <circle cx="284" cy="278" r="16" fill="#38bdf8" />
-
-          <!-- Нижний поршневой узел с ядром кузницы Forge -->
           <circle cx="178" cy="358" r="54" fill="#0b0f19" stroke="url(#sf-arm)" stroke-width="18" />
           <circle cx="178" cy="358" r="26" fill="url(#sf-fire-core)" />
         </g>
@@ -483,27 +601,33 @@
       <span>SteamForge</span>
     </a>
     <div class="nav-links">
-      <a href="https://github.com/moskvol" target="_blank" class="nav-btn">GitHub</a>
-      <a href="https://moskvol.github.io" target="_blank" class="nav-btn">moskvol.github.io</a>
+      <a href="https://github.com/moskvol" target="_blank" class="nav-btn">moskvol</a>
     </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
     <div class="badge">
-      <span>● 1.0 бета тест</span>
+      <div class="badge-dot"></div>
+      <span>Версия 1.0 • Engine Core Active</span>
     </div>
-    <h1>Умный менеджер манифестов<br><span class="grad-text">для Linux и Windows</span></h1>
-    <p>Автоматический поиск игр через Steam Store API, загрузка официальных постеров и мгновенная генерация <code>.lua</code> манифестов в <code>stplug-in</code> за 1 клик.</p>
+    <h1>Умный менеджер манифестов<br><span class="grad-text">нового поколения</span></h1>
+    <p>Автоматический поиск игр через официальный Steam Store API, выгрузка постеров и мгновенная генерация <code>.lua</code> файлов в <code>stplug-in</code> в один клик.</p>
     
     <div class="cta-group">
-      <a href="javascript:void(0)" class="btn-primary" title="В разработке для CachyOS / Arch Linux">
-        <span class="btn-text-default">Скачать для Linux / CachyOS 🐧</span>
-        <span class="btn-text-hover">Порт выйдет в скором времени ⏳</span>
+      <!-- Windows кнопка с анимацией "Скоро выйдет!" -->
+      <a href="javascript:void(0)" class="btn-windows-main" title="Скачать SteamForge">
+        <span class="btn-text-default">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.95-1.801"/></svg>
+          Скачать для Windows
+        </span>
+        <span class="btn-text-hover">Скоро выйдет! ⏳</span>
       </a>
 
-      <a href="https://github.com/moskvol" target="_blank" class="btn-secondary">
-        <span>Сборка для Windows</span> 🪟
+      <!-- Прямая ссылка на репозиторий проекта -->
+      <a href="https://github.com/moskvol/steamforge" target="_blank" class="btn-secondary">
+        <span>Репозиторий SteamForge</span>
+        <span>→</span>
       </a>
     </div>
   </section>
@@ -556,7 +680,7 @@
         </div>
       </div>
 
-      <!-- Дубликат -->
+      <!-- Дубликат для плавного бесконечного скролла -->
       <div class="mini-game-card">
         <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/239140/capsule_231x87.jpg" alt="Dying Light">
         <div class="game-details">
@@ -583,20 +707,6 @@
         <div class="game-details">
           <span class="game-name">Rust</span>
           <span class="game-desc"><span class="game-tag">252490.lua</span> • Сгенерирован</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/4000/capsule_231x87.jpg" alt="Garry's Mod">
-        <div class="game-details">
-          <span class="game-name">Garry's Mod</span>
-          <span class="game-desc"><span class="game-tag">4000.lua</span> • Интеграция успешна</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/220/capsule_231x87.jpg" alt="Half-Life 2">
-        <div class="game-details">
-          <span class="game-name">Half-Life 2</span>
-          <span class="game-desc"><span class="game-tag">220.lua</span> • Готов к инжекту</span>
         </div>
       </div>
     </div>
@@ -638,15 +748,8 @@
           <span class="game-desc"><span class="game-tag">105600.lua</span> • Сгенерирован</span>
         </div>
       </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/620/capsule_231x87.jpg" alt="Portal 2">
-        <div class="game-details">
-          <span class="game-name">Portal 2</span>
-          <span class="game-desc"><span class="game-tag">620.lua</span> • Интеграция успешна</span>
-        </div>
-      </div>
 
-      <!-- Дубликат -->
+      <!-- Дубликат для скролла -->
       <div class="mini-game-card">
         <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_231x87.jpg" alt="Grand Theft Auto V">
         <div class="game-details">
@@ -668,105 +771,27 @@
           <span class="game-desc"><span class="game-tag">292030.lua</span> • Депо синхронизировано</span>
         </div>
       </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_231x87.jpg" alt="Counter-Strike 2">
-        <div class="game-details">
-          <span class="game-name">Counter-Strike 2</span>
-          <span class="game-desc"><span class="game-tag">730.lua</span> • Готов к инжекту</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/105600/capsule_231x87.jpg" alt="Terraria">
-        <div class="game-details">
-          <span class="game-name">Terraria</span>
-          <span class="game-desc"><span class="game-tag">105600.lua</span> • Сгенерирован</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/620/capsule_231x87.jpg" alt="Portal 2">
-        <div class="game-details">
-          <span class="game-name">Portal 2</span>
-          <span class="game-desc"><span class="game-tag">620.lua</span> • Интеграция успешна</span>
-        </div>
-      </div>
     </div>
+  </section>
 
-    <!-- Ряд 3 (Влево) -->
-    <div class="marquee-row marquee-left">
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/550/capsule_231x87.jpg" alt="Left 4 Dead 2">
-        <div class="game-details">
-          <span class="game-name">Left 4 Dead 2</span>
-          <span class="game-desc"><span class="game-tag">550.lua</span> • Валидный манифест</span>
+  <!-- Интерактивная консоль SteamForge (Terminal Preview) -->
+  <section class="terminal-section">
+    <div class="terminal-box">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
         </div>
+        <div class="terminal-title">steamforge-engine :: core-runtime</div>
+        <div style="width: 40px;"></div>
       </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_231x87.jpg" alt="Apex Legends">
-        <div class="game-details">
-          <span class="game-name">Apex Legends</span>
-          <span class="game-desc"><span class="game-tag">1172470.lua</span> • Готов к инжекту</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_231x87.jpg" alt="Dota 2">
-        <div class="game-details">
-          <span class="game-name">Dota 2</span>
-          <span class="game-desc"><span class="game-tag">570.lua</span> • Депо синхронизировано</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/413150/capsule_231x87.jpg" alt="Stardew Valley">
-        <div class="game-details">
-          <span class="game-name">Stardew Valley</span>
-          <span class="game-desc"><span class="game-tag">413150.lua</span> • Сгенерирован</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_231x87.jpg" alt="Baldur's Gate 3">
-        <div class="game-details">
-          <span class="game-name">Baldur's Gate 3</span>
-          <span class="game-desc"><span class="game-tag">1086940.lua</span> • Готов к инжекту</span>
-        </div>
-      </div>
-
-      <!-- Дубликат -->
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/550/capsule_231x87.jpg" alt="Left 4 Dead 2">
-        <div class="game-details">
-          <span class="game-name">Left 4 Dead 2</span>
-          <span class="game-desc"><span class="game-tag">550.lua</span> • Валидный манифест</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_231x87.jpg" alt="Apex Legends">
-        <div class="game-details">
-          <span class="game-name">Apex Legends</span>
-          <span class="game-desc"><span class="game-tag">1172470.lua</span> • Готов к инжекту</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_231x87.jpg" alt="Dota 2">
-        <div class="game-details">
-          <span class="game-name">Dota 2</span>
-          <span class="game-desc"><span class="game-tag">570.lua</span> • Депо синхронизировано</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/413150/capsule_231x87.jpg" alt="Stardew Valley">
-        <div class="game-details">
-          <span class="game-name">Stardew Valley</span>
-          <span class="game-desc"><span class="game-tag">413150.lua</span> • Сгенерирован</span>
-        </div>
-      </div>
-      <div class="mini-game-card">
-        <img class="game-icon" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_231x87.jpg" alt="Baldur's Gate 3">
-        <div class="game-details">
-          <span class="game-name">Baldur's Gate 3</span>
-          <span class="game-desc"><span class="game-tag">1086940.lua</span> • Готов к инжекту</span>
-        </div>
-      </div>
+      <div class="terminal-body"><span class="term-dim"># Инициализация SteamForge Engine...</span>
+<span class="term-cyan">[INFO]</span> Подключение к Steam Store Web API... <span class="term-green">OK</span>
+<span class="term-cyan">[SCAN]</span> Обнаружена целевая директория плагина: <span class="term-gold">stplug-in/</span>
+<span class="term-green">[GEN]</span>  Сгенерирован манифест: <span class="term-cyan">1091500.lua</span> (Cyberpunk 2077)
+<span class="term-green">[DONE]</span> <strong>Все депо и DLC успешно добавлены в очередь загрузки!</strong></div>
     </div>
-
   </section>
 
   <!-- Карточки фич -->
@@ -777,7 +802,7 @@
       <div class="feature-card">
         <div class="feature-icon">🔍</div>
         <h3>Steam Store API</h3>
-        <p>Не нужно вручную искать и вспоминать AppID игры. Вбиваешь название — движок сам найдет точные данные.</p>
+        <p>Не нужно вручную искать и вспоминать AppID игры. Вбиваешь название — движок сам находит точные данные.</p>
       </div>
 
       <div class="feature-card">
@@ -787,9 +812,9 @@
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">❓</div>
-        <h3>2.0?</h3>
-        <p>Что-то масштабное уже находится в секретной разработке.</p>
+        <div class="feature-icon">🚀</div>
+        <h3>Максимальная скорость</h3>
+        <p>Оптимизированный движок на современной архитектуре без задержек и подвисаний интерфейса.</p>
       </div>
 
       <div class="feature-card">
@@ -801,10 +826,29 @@
     </div>
   </section>
 
+  <!-- Нижняя статус-панель (Cyber HUD) -->
+  <div class="cyber-hud">
+    <div class="hud-items">
+      <div class="hud-stat">
+        <div class="hud-pulse"></div>
+        <span>Steam API: <strong style="color: #34d399;">ONLINE</strong></span>
+      </div>
+      <div class="hud-stat">
+        <span>Engine: <strong style="color: #38bdf8;">v1.0-BETA</strong></span>
+      </div>
+      <div class="hud-stat">
+        <span>Manifest Gen: <strong style="color: #a5b4fc;">READY</strong></span>
+      </div>
+    </div>
+    <div style="color: var(--text-dim); font-size: 11px;">
+      steamforge-dev.github.io
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <p>SteamForge • Разработано <a href="https://github.com/moskvol" target="_blank">moskvol</a></p>
-    <p style="margin-top: 6px; opacity: 0.6;">moskvol.github.io • 2026</p>
+    <p style="margin-top: 6px; opacity: 0.6;"><a href="https://github.com/moskvol/steamforge" target="_blank">github.com/moskvol/steamforge</a> • 2026</p>
   </footer>
 
 </body>
