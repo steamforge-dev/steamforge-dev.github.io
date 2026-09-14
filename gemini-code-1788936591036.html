@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>moskvol // Personal Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9ecaff;
+      --on-primary: #003258;
+      --primary-container: #00497d;
+      --on-primary-container: #d1e4ff;
+      --surface: #111318;
+      --surface-container-lowest: #0c0e13;
+      --surface-container-low: #1a1c22;
+      --surface-container: #1e2027;
+      --surface-container-high: #282a31;
+      --surface-container-highest: #33353c;
+      --on-surface: #e2e2e9;
+      --on-surface-variant: #c3c7d0;
+      --outline: #8d9199;
+      --outline-variant: #43474e;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-pill: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #000000;
+      color: var(--on-surface);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 32px 16px;
+      transition: background-color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    /* === 1. BIOS === */
+    #biosScreen {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      z-index: 10000;
+      color: #d0d7de;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: default;
+      transition: opacity 0.4s ease;
+    }
+
+    #biosScreen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .bios-top-banner {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #333;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bios-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bios-line {
+      white-space: pre-wrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bios-cursor {
+      display: inline-block;
+      width: 9px;
+      height: 15px;
+      background: #fff;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .bios-footer {
+      border-top: 1px solid #333;
+      padding-top: 10px;
+      font-size: 0.78rem;
+      color: #8b949e;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* === 2. WINDOWS 11 BOOT === */
+    #winBootScreen {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #winBootScreen.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #winBootScreen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .win-logo {
+      display: grid;
+      grid-template-columns: 36px 36px;
+      grid-template-rows: 36px 36px;
+      gap: 5px;
+      margin-bottom: 75px;
+    }
+
+    .win-tile {
+      background: #0078d4;
+      border-radius: 1px;
+    }
+
+    .win-spinner {
+      position: relative;
+      width: 50px;
+      height: 50px;
+    }
+
+    .win-spinner .dot {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      opacity: 0;
+      transform: rotate(225deg);
+      animation: winSpin 5s cubic-bezier(0.12, 0.45, 0.32, 0.98) infinite;
+    }
+
+    .win-spinner .dot::after {
+      content: '';
+      position: absolute;
+      width: 5.5px;
+      height: 5.5px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .win-spinner .dot:nth-child(1) { animation-delay: 0.15s; }
+    .win-spinner .dot:nth-child(2) { animation-delay: 0.35s; }
+    .win-spinner .dot:nth-child(3) { animation-delay: 0.55s; }
+    .win-spinner .dot:nth-child(4) { animation-delay: 0.75s; }
+    .win-spinner .dot:nth-child(5) { animation-delay: 0.95s; }
+
+    @keyframes winSpin {
+      0% { transform: rotate(225deg); opacity: 1; animation-timing-function: cubic-bezier(0.12, 0.45, 0.32, 0.98); }
+      7% { transform: rotate(345deg); animation-timing-function: linear; }
+      30% { transform: rotate(455deg); animation-timing-function: cubic-bezier(0.12, 0.45, 0.32, 0.98); }
+      39% { transform: rotate(690deg); animation-timing-function: linear; }
+      70% { transform: rotate(815deg); opacity: 1; animation-timing-function: cubic-bezier(0.12, 0.45, 0.32, 0.98); }
+      75% { transform: rotate(945deg); animation-timing-function: cubic-bezier(0.12, 0.45, 0.32, 0.98); }
+      76% { transform: rotate(945deg); opacity: 0; }
+      100% { transform: rotate(945deg); opacity: 0; }
+    }
+
+    /* === 3. ОСНОВНОЙ КОНТЕЙНЕР === */
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+      transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .container.loaded {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Header */
+    .profile-card {
+      background: var(--surface-container);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .profile-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .profile-badge {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* Селектор режима (Material You / Fastfetch) */
+    .view-mode-selector {
+      background: var(--surface-container-high);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: var(--on-surface-variant);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .profile-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.5px;
+    }
+
+    .profile-subtitle {
+      font-size: 0.95rem;
+      color: var(--on-surface-variant);
+      line-height: 1.4;
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 12px;
+    }
+
+    /* Чипсы интересов */
+    .chips-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .m3-chip {
+      background: var(--surface-container-low);
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .m3-chip:hover {
+      background: var(--surface-container-high);
+      transform: translateY(-2px);
+    }
+
+    .m3-chip-header {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 6px;
+    }
+
+    .m3-chip p {
+      font-size: 0.82rem;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
+    /* РЕЖИМ 1: MATERIAL YOU КАРТОЧКА СТЕКА */
+    #viewMaterial {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--surface-container-low);
+      border-radius: var(--radius-md);
+      padding: 22px;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .spec-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-name {
+      font-size: 0.88rem;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+
+    .spec-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .spec-tag {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      margin-left: 6px;
+    }
+
+    /* РЕЖИМ 2: FASTFETCH ТЕРМИНАЛ */
+    #viewFastfetch {
+      display: none;
+      background: #090d12;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+      overflow-x: auto;
+    }
+
+    .fastfetch-logo {
+      color: var(--primary);
+      font-size: 0.7rem;
+      line-height: 1.15;
+      white-space: pre;
+      user-select: none;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      transition: color 0.3s ease;
+    }
+
+    .fastfetch-info {
+      font-size: 0.82rem;
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ff-user {
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ff-sep {
+      color: var(--outline-variant);
+      margin-bottom: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ff-key {
+      color: var(--primary);
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ff-val {
+      color: #f0f6fc;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Палитра тем */
+    .palette-container {
+      background: var(--surface-container);
+      padding: 14px 20px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .palette-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .palette-swatches {
+      display: flex;
+      gap: 8px;
+    }
+
+    .color-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .color-swatch:hover { transform: scale(1.18); }
+    .color-swatch.active { border-color: #ffffff; transform: scale(1.15); }
+
+    /* Кнопки ссылок */
+    .links-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .m3-button-card {
+      background: var(--surface-container);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      color: var(--on-surface);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .m3-button-card:hover {
+      background: var(--surface-container-high);
+      transform: translateY(-2px);
+    }
+
+    .m3-btn-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .m3-action-chip {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .m3-action-chip:hover { opacity: 0.9; }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--on-surface-variant);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Экран BIOS -->
+  <div id="biosScreen">
+    <div>
+      <div class="bios-top-banner">
+        <span>MOSKVOL UEFI BIOS POST v2.40</span>
+        <span>ACPI x64 READY</span>
+      </div>
+      <div class="bios-lines" id="biosOutput"></div>
+    </div>
+    <div class="bios-footer">
+      <span>DEL: Setup | F11: Boot Menu | F12: Network Boot</span>
+      <span>Energy Star Compliant</span>
+    </div>
+  </div>
+
+  <!-- 2. Экран Windows 11 Boot -->
+  <div id="winBootScreen">
+    <div class="win-logo">
+      <div class="win-tile"></div>
+      <div class="win-tile"></div>
+      <div class="win-tile"></div>
+      <div class="win-tile"></div>
+    </div>
+    <div class="win-spinner">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- 3. Основной сайт -->
+  <main class="container" id="mainContainer">
+    
+    <header class="profile-card">
+      <div class="profile-top-row">
+        <span class="profile-badge">Dual Interface</span>
+        
+        <!-- Переключатель видов -->
+        <div class="view-mode-selector">
+          <button class="view-btn active" id="btnMaterial" onclick="switchView('material')">Material You</button>
+          <button class="view-btn" id="btnFastfetch" onclick="switchView('fastfetch')">Fastfetch</button>
+        </div>
+      </div>
+
+      <h1 class="profile-title">Привет, я moskvol 👋</h1>
+      <p class="profile-subtitle">Энтузиаст открытого ПО, кастомизации ОС, современного компьютерного железа и игр.</p>
+    </header>
+
+    <section>
+      <div class="section-label">Сферы интересов</div>
+      <div class="chips-group">
+        <div class="m3-chip">
+          <div class="m3-chip-header">🐧 Linux</div>
+          <p>Свобода окружения, терминал, dotfiles и кастомизация интерфейса.</p>
+        </div>
+        <div class="m3-chip">
+          <div class="m3-chip-header">🖥️ Компьютеры</div>
+          <p>Оптимизация, сборка конфигураций, разгон и низкоуровневая настройка.</p>
+        </div>
+        <div class="m3-chip">
+          <div class="m3-chip-header">🎮 Гейминг</div>
+          <p>Сетевые баталии, интерактивные приключения и соревновательные игры.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- БЛОК ХАРАКТЕРИСТИК (С переключателем) -->
+    <section>
+      <div class="section-label" id="specHeader">Аппаратный стек (Hardware)</div>
+
+      <!-- Вариант 1: Material You -->
+      <div id="viewMaterial">
+        <div class="spec-row">
+          <span class="spec-name">⚙️ Процессор</span>
+          <span class="spec-val">Intel Core i5-13400F</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-name">🎮 Видеокарта</span>
+          <span class="spec-val">NVIDIA RTX 4060 Ti <span class="spec-tag">8 GB</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-name">🧠 ОЗУ</span>
+          <span class="spec-val">16 GB <span class="spec-tag">DDR5</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-name">💽 Платформа</span>
+          <span class="spec-val">Windows 11 / Linux</span>
+        </div>
+      </div>
+
+      <!-- Вариант 2: Fastfetch Terminal -->
+      <div id="viewFastfetch">
+        <pre class="fastfetch-logo">
+################  ################
+################  ################
+################  ################
+################  ################
+################  ################
+################  ################
+                                  
+################  ################
+################  ################
+################  ################
+################  ################
+################  ################
+################  ################
+        </pre>
+        <div class="fastfetch-info">
+          <div><span class="ff-user">moskvol</span>@<span class="ff-user">custom-rig</span></div>
+          <div class="ff-sep">------------------------</div>
+          <div><span class="ff-key">OS:</span> <span class="ff-val">Windows 11 / Linux x86_64</span></div>
+          <div><span class="ff-key">Host:</span> <span class="ff-val">Desktop PC</span></div>
+          <div><span class="ff-key">Kernel:</span> <span class="ff-val">10.0.22631 / 6.10.3-arch</span></div>
+          <div><span class="ff-key">Shell:</span> <span class="ff-val">bash 5.2.26</span></div>
+          <div><span class="ff-key">CPU:</span> <span class="ff-val">Intel(R) Core(TM) i5-13400F (16) @ 4.60GHz</span></div>
+          <div><span class="ff-key">GPU:</span> <span class="ff-val">NVIDIA GeForce RTX 4060 Ti [8GB GDDR6]</span></div>
+          <div><span class="ff-key">Memory:</span> <span class="ff-val">4812MiB / 16384MiB (DDR5)</span></div>
+          <div><span class="ff-key">Disk (/):</span> <span class="ff-val">120GiB / 1024GiB (NVMe SSD)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Палитра тонов -->
+    <div class="palette-container">
+      <span class="palette-title">Цветовой акцент</span>
+      <div class="palette-swatches">
+        <button class="color-swatch active" style="background: #9ecaff;" data-theme="blue" title="Blue"></button>
+        <button class="color-swatch" style="background: #a8d59d;" data-theme="green" title="Green"></button>
+        <button class="color-swatch" style="background: #d4bbff;" data-theme="purple" title="Purple"></button>
+        <button class="color-swatch" style="background: #ffb4a9;" data-theme="coral" title="Coral"></button>
+        <button class="color-swatch" style="background: #80d5d0;" data-theme="teal" title="Teal"></button>
+      </div>
+    </div>
+
+    <!-- Соцсети -->
+    <section>
+      <div class="section-label">Контакты</div>
+      <div class="links-group">
+        <a href="https://steamcommunity.com/id/moskvol/" target="_blank" rel="noopener noreferrer" class="m3-button-card">
+          <div class="m3-btn-inner">
+            <span>🎮 Steam Профиль</span>
+          </div>
+          <span class="m3-action-chip">Открыть ↗</span>
+        </a>
+
+        <div class="m3-button-card">
+          <div class="m3-btn-inner">
+            <span>💬 Discord: <strong style="color: var(--primary);">moskvol1337</strong></span>
+          </div>
+          <button class="m3-action-chip" onclick="copyDiscord(this)">Копировать</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>print("Hello MoskVol!")</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ РЕЖИМА (MATERIAL YOU / FASTFETCH) ===
+    function switchView(mode) {
+      initAudio();
+      playClickSound();
+
+      const viewMaterial = document.getElementById("viewMaterial");
+      const viewFastfetch = document.getElementById("viewFastfetch");
+      const btnMaterial = document.getElementById("btnMaterial");
+      const btnFastfetch = document.getElementById("btnFastfetch");
+      const specHeader = document.getElementById("specHeader");
+
+      if (mode === "fastfetch") {
+        viewMaterial.style.display = "none";
+        viewFastfetch.style.display = "flex";
+        btnFastfetch.classList.add("active");
+        btnMaterial.classList.remove("active");
+        specHeader.textContent = "moskvol@system:~$ fastfetch";
+      } else {
+        viewMaterial.style.display = "flex";
+        viewFastfetch.style.display = "none";
+        btnMaterial.classList.add("active");
+        btnFastfetch.classList.remove("active");
+        specHeader.textContent = "Аппаратный стек (Hardware)";
+      }
+
+      localStorage.setItem("moskvol_view_mode", mode);
+    }
+
+    // === ТЕМЫ MATERIAL YOU ===
+    const themes = {
+      blue: {
+        primary: "#9ecaff",
+        onPrimary: "#003258",
+        primaryContainer: "#00497d",
+        onPrimaryContainer: "#d1e4ff",
+        surface: "#111318",
+        surfaceContainerLow: "#1a1c22",
+        surfaceContainer: "#1e2027",
+        surfaceContainerHigh: "#282a31"
+      },
+      green: {
+        primary: "#a8d59d",
+        onPrimary: "#143813",
+        primaryContainer: "#2b5028",
+        onPrimaryContainer: "#c3f2b7",
+        surface: "#111411",
+        surfaceContainerLow: "#191d19",
+        surfaceContainer: "#1d211d",
+        surfaceContainerHigh: "#282c27"
+      },
+      purple: {
+        primary: "#d4bbff",
+        onPrimary: "#3b1a6d",
+        primaryContainer: "#533385",
+        onPrimaryContainer: "#ecd9ff",
+        surface: "#141218",
+        surfaceContainerLow: "#1d1a22",
+        surfaceContainer: "#211f26",
+        surfaceContainerHigh: "#2c2931"
+      },
+      coral: {
+        primary: "#ffb4a9",
+        onPrimary: "#561e17",
+        primaryContainer: "#73342b",
+        onPrimaryContainer: "#ffdad5",
+        surface: "#1a1110",
+        surfaceContainerLow: "#231918",
+        surfaceContainer: "#271d1c",
+        surfaceContainerHigh: "#332726"
+      },
+      teal: {
+        primary: "#80d5d0",
+        onPrimary: "#003734",
+        primaryContainer: "#00504c",
+        onPrimaryContainer: "#9cf1ec",
+        surface: "#0e1514",
+        surfaceContainerLow: "#161d1c",
+        surfaceContainer: "#1a2221",
+        surfaceContainerHigh: "#242c2b"
+      }
+    };
+
+    const swatches = document.querySelectorAll(".color-swatch");
+
+    function applyTheme(name, targetBtn) {
+      const t = themes[name];
+      if (!t) return;
+
+      const r = document.documentElement;
+      r.style.setProperty("--primary", t.primary);
+      r.style.setProperty("--on-primary", t.onPrimary);
+      r.style.setProperty("--primary-container", t.primaryContainer);
+      r.style.setProperty("--on-primary-container", t.onPrimaryContainer);
+      r.style.setProperty("--surface", t.surface);
+      r.style.setProperty("--surface-container-low", t.surfaceContainerLow);
+      r.style.setProperty("--surface-container", t.surfaceContainer);
+      r.style.setProperty("--surface-container-high", t.surfaceContainerHigh);
+
+      document.body.style.backgroundColor = t.surface;
+
+      swatches.forEach(s => s.classList.remove("active"));
+      if (targetBtn) targetBtn.classList.add("active");
+
+      localStorage.setItem("moskvol_m3_theme", name);
+    }
+
+    swatches.forEach(btn => {
+      btn.addEventListener("click", () => {
+        initAudio();
+        playClickSound();
+        const themeName = btn.getAttribute("data-theme");
+        applyTheme(themeName, btn);
+      });
+    });
+
+    const savedTheme = localStorage.getItem("moskvol_m3_theme") || "blue";
+    const activeThemeBtn = document.querySelector(`.color-swatch[data-theme="${savedTheme}"]`);
+    applyTheme(savedTheme, activeThemeBtn);
+
+    // Восстановление режима отображения
+    const savedMode = localStorage.getItem("moskvol_view_mode") || "material";
+    if (savedMode === "fastfetch") {
+      switchView("fastfetch");
+    }
+
+    // === ЗВУКОВОЙ ДВИЖОК ===
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playPostBeep() {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "square";
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch (e) {}
+    }
+
+    function playWindowsStartupSound() {
+      if (!audioCtx) return;
+      try {
+        const notes = [
+          { freq: 392.00, start: 0.00, dur: 1.2 },
+          { freq: 523.25, start: 0.15, dur: 1.4 },
+          { freq: 659.25, start: 0.32, dur: 1.5 },
+          { freq: 783.99, start: 0.50, dur: 2.2 }
+        ];
+
+        notes.forEach(note => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(note.freq, audioCtx.currentTime + note.start);
+          gain.gain.setValueAtTime(0.0001, audioCtx.currentTime + note.start);
+          gain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + note.start + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + note.start + note.dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(audioCtx.currentTime + note.start);
+          osc.stop(audioCtx.currentTime + note.start + note.dur);
+        });
+      } catch (e) {}
+    }
+
+    function playClickSound() {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.035);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.035);
+      } catch (e) {}
+    }
+
+    function delay(ms) {
+      return new Promise(res => setTimeout(res, ms));
+    }
+
+    window.addEventListener("click", () => initAudio(), { once: true });
+    window.addEventListener("keydown", () => initAudio(), { once: true });
+
+    // === ЦИКЛ СТАРТА: BIOS -> WIN11 -> САЙТ ===
+    window.addEventListener("DOMContentLoaded", async () => {
+      initAudio();
+
+      const biosScreen = document.getElementById("biosScreen");
+      const biosOutput = document.getElementById("biosOutput");
+      const winBootScreen = document.getElementById("winBootScreen");
+      const mainContainer = document.getElementById("mainContainer");
+
+      function addBiosLine(text) {
+        const line = document.createElement("div");
+        line.className = "bios-line";
+        line.textContent = text;
+        biosOutput.appendChild(line);
+        return line;
+      }
+
+      await delay(200);
+      addBiosLine("MOSKVOL Modular BIOS v6.00PG, An Energy Star Ally");
+      addBiosLine("Copyright (C) 2026, MoskVol Hardware Systems Corp.\n");
+      await delay(200);
+
+      addBiosLine("CPU: Intel(R) Core(TM) i5-13400F Processor @ 4.60 GHz");
+      await delay(150);
+
+      addBiosLine("VGA BIOS: NVIDIA GeForce RTX 4060 Ti 8GB VRAM Installed");
+      await delay(150);
+
+      const memLine = addBiosLine("Memory Testing: ");
+      for (let mem = 4096; mem <= 16384; mem += 4096) {
+        memLine.textContent = `Memory Testing: ${mem}MB DDR5 OK`;
+        await delay(50);
+      }
+
+      addBiosLine("\nPrimary Master: NVMe PCI-E SSD (OS: Windows Boot Manager)");
+      addBiosLine("SMART Status: All Drives HEALTHY");
+      await delay(250);
+
+      playPostBeep();
+      addBiosLine("\nPOST Check Complete. Handing control to OS...");
+
+      const cursorLine = document.createElement("div");
+      cursorLine.innerHTML = '<span class="bios-cursor"></span>';
+      biosOutput.appendChild(cursorLine);
+
+      await delay(700);
+
+      biosScreen.classList.add("fade-out");
+      winBootScreen.classList.add("active");
+      setTimeout(() => {
+        biosScreen.style.display = "none";
+      }, 400);
+
+      await delay(2800);
+
+      playWindowsStartupSound();
+      winBootScreen.classList.add("fade-out");
+      setTimeout(() => {
+        winBootScreen.style.display = "none";
+        document.body.style.backgroundColor = "var(--surface)";
+        mainContainer.classList.add("loaded");
+      }, 600);
+    });
+
+    function copyDiscord(button) {
+      initAudio();
+      playClickSound();
+      navigator.clipboard.writeText("moskvol1337").then(() => {
+        const originalText = button.textContent;
+        button.textContent = "Скопировано!";
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
